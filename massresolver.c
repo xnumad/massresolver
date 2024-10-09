@@ -130,13 +130,13 @@ mycallback(void *mydata, int err, struct ub_result *result)
             }
             output = ldns_buffer_new(wire_packet_len);
             rdf = ldns_rr_rdf(answer, 0);
-            if (QTYPE == LDNS_RR_TYPE_A) {
+            if (ldns_rr_get_type(answer) == LDNS_RR_TYPE_A) {
                 ldns_rdf2buffer_str_a(output, rdf);
-            } else if (QTYPE == LDNS_RR_TYPE_AAAA) {
+            } else if (ldns_rr_get_type(answer) == LDNS_RR_TYPE_AAAA) {
                 ldns_rdf2buffer_str_aaaa(output, rdf);
-            } else if (QTYPE == LDNS_RR_TYPE_TXT) {
+            } else if (ldns_rr_get_type(answer) == LDNS_RR_TYPE_TXT) {
                 ldns_rdf2buffer_str_str(output, rdf);
-            } else if (QTYPE == LDNS_RR_TYPE_NS) {
+            } else if (ldns_rr_get_type(answer) == LDNS_RR_TYPE_NS) {
                 ldns_rdf2buffer_str_dname(output, rdf);
             } else {
                 assert(0);
