@@ -106,7 +106,7 @@ mycallback(void *mydata, int err, struct ub_result *result)
         fprintf(stderr, "resolve error: %s\n", ub_strerror(err));
         return;
     }
-    if (result->havedata) {
+    if (result->havedata || result->answer_len > 0) { //havedata sometimes false for some reason
         ldns_buffer  *output;
         ldns_pkt     *packet = NULL;
         ldns_rdf     *rdf;
