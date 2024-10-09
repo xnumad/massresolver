@@ -126,7 +126,7 @@ mycallback(void *mydata, int err, struct ub_result *result)
         for (i = (size_t) 0U; i < answers_count; i++) {
             answer = ldns_rr_list_rr(answers, i);
             if (ldns_rr_get_type(answer) != QTYPE) {
-                continue;
+//                continue;
             }
             output = ldns_buffer_new(wire_packet_len);
             rdf = ldns_rr_rdf(answer, 0);
