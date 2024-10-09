@@ -183,6 +183,7 @@ main(void)
 #endif
     ub_ctx_set_option(ctx, "num-threads:", "8");
     ub_ctx_set_option(ctx, "outgoing-range:", "8192");
+    ub_ctx_set_option(ctx, "tcp-upstream:", "yes");
     ub_ctx_set_option(ctx, "outgoing-num-tcp:", "100");
     ub_ctx_set_option(ctx, "outgoing-num-udp:", "100");
     ub_ctx_set_option(ctx, "so-rcvbuf:", "8m");
