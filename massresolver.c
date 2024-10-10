@@ -111,6 +111,24 @@ mycallback(void *mydata, int err, struct ub_result *result)
     if (result->was_ratelimited) {
         assert(0);
     }
+
+    switch (result->rcode) {
+        case 0:
+            break;
+        case 3:
+            printf("%s nxdomain\n", result->qname);
+            break;
+        case 2:
+            printf("%s servfail\n", result->qname); //I actually don't see that in wireshark. does it do request stacking?
+            break;
+        default:
+            printf("%s failed unk rcode\n", result->qname);
+            printf("the rcode is \n");
+            printf("%d\n", result->rcode);
+            assert(result->rcode == 0);
+            break;
+    }
+
     if (result->havedata || result->answer_len > 0) { //havedata sometimes false for some reason
         ldns_buffer  *output;
         ldns_pkt     *packet = NULL;
