@@ -123,6 +123,7 @@ mycallback(void *mydata, int err, struct ub_result *result)
             answers = ldns_pkt_answer(packet);
             answers_count = ldns_rr_list_rr_count(answers);
         }
+        printf("%s ", result->qname);
         for (i = (size_t) 0U; i < answers_count; i++) {
             answer = ldns_rr_list_rr(answers, i);
             if (ldns_rr_get_type(answer) != QTYPE) {
@@ -141,10 +142,16 @@ mycallback(void *mydata, int err, struct ub_result *result)
             } else {
                 assert(0);
             }
-            printf("%s %s %" PRIu32 "\n", result->qname, ldns_buffer_begin(output),
-                   ldns_rr_ttl(answer));
+
+            if (i > 0) {
+                printf(",");
+            }
+            printf("%s %" PRIu32,
+                   ldns_buffer_begin(output), ldns_rr_ttl(answer));
+
             ldns_buffer_free(output);
         }
+        printf("\n");
         ldns_pkt_free(packet);
         fflush(stdout);
     }
