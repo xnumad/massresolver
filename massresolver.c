@@ -99,12 +99,17 @@ increment_running(void)
 static void
 mycallback(void *mydata, int err, struct ub_result *result)
 {
+    assert(result != NULL);
+
     unsigned int  current_running = decrement_running();
 
     (void) mydata;
     if (err != 0) {
         fprintf(stderr, "resolve error: %s\n", ub_strerror(err));
         return;
+    }
+    if (result->was_ratelimited) {
+        assert(0);
     }
     if (result->havedata || result->answer_len > 0) { //havedata sometimes false for some reason
         ldns_buffer  *output;
@@ -202,7 +207,7 @@ main(void)
     ub_ctx_set_option(ctx, "rrset-cache-slabs:", "8");
     ub_ctx_set_option(ctx, "cache-min-ttl:", "30");
     ub_ctx_set_option(ctx, "infra-cache-slabs:", "8");
-    ub_ctx_set_option(ctx, "do-ip6:", "no");
+    ub_ctx_set_option(ctx, "do-ip6:", "yes");
     ub_ctx_set_option(ctx, "minimal-responses:", "yes");
     ub_ctx_set_option(ctx, "key-cache-slabs:", "8");
 
