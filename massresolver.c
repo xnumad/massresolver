@@ -187,6 +187,7 @@ mycallback(void *mydata, int err, struct ub_result *result)
 
     char *name;
     while (current_running < MAX_RUNNING && (name = get_one()) != NULL) {
+        printf("%s requested\n", name);
         int retval = ub_resolve_async(ctx, name,
                                       QTYPE, LDNS_RR_CLASS_IN,
                                       NULL, mycallback, NULL);
